@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Button, TextInput, Text, Pressable } from 'react-native';
 import { Formik } from 'formik'
 import { LinearGradient } from 'expo-linear-gradient';
-import Instance from '../functions/token'
+import axios from '../API/APIConnect'
 
 
 export default function Connect() {
@@ -17,11 +17,24 @@ export default function Connect() {
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     onSubmit={values => {
-                        Instance.get("/cards")
+                        // check email and password with axios [values.email, values.password]
+
+                        const instance = axios.create({
+                            baseURL: "http://localhost:8000/api",
+                            timeout: 1000,
+                            headers: {
+                                'Content-Type': 'json'
+                            }
+                        });
+
+                        let jsonSend = { username: values.email, password: values.password };
+
+                        instance.post("/login_check", jsonSend)
                             .then(res => console.log(res))
                             .catch(error => console.log(error));
-                        // check email and password with axios [values.email, values.password]
-                        //getToken(values.email, values.password);
+
+                        // Instance.get("/cards").then(res => console.log(res)).catch(error => console.log(error));
+                        // getToken(values.email, values.password);
 
                     }}
                 >

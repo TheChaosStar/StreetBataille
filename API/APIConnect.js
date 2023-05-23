@@ -1,5 +1,10 @@
-import Axios from "axios"
+import axios from "axios"
 
+axios.defaults.withCredentials = true;
+
+export default axios;
+
+/*
 var token = "";
 
 const instance = Axios.create({
@@ -12,3 +17,4 @@ const instance = Axios.create({
 });
 
 export default instance;
+*/
